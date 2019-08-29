@@ -112,11 +112,11 @@ public class WOVariables {
 
 	private File _wolipsPropertiesFile;
 
-	public WOVariables(WOVariables variables, Map<Object, Object> existingProperties) {
+	public WOVariables(WOVariables variables, Map<?, ?> existingProperties) {
 		init(variables, existingProperties);
 	}
 
-	public WOVariables(Map<Object, Object> existingProperties) {
+	public WOVariables(Map<?, ?> existingProperties) {
 		init(null, existingProperties);
 	}
 	
@@ -137,7 +137,7 @@ public class WOVariables {
 		return wolipsPropertiesFile;
 	}
 
-	public void init(WOVariables variables, Map<Object, Object> existingProperties) {
+	public void init(WOVariables variables, Map<?, ?> existingProperties) {
 		_wolipsPropertiesDefaults = new Properties();
 		
 		if (variables == null) {
@@ -248,7 +248,7 @@ public class WOVariables {
 		}
 
 		if (existingProperties != null) {
-			for (Map.Entry<Object, Object> entry : existingProperties.entrySet()) {
+			for (Map.Entry<?, ?> entry : existingProperties.entrySet()) {
 				if (entry.getKey() instanceof String && entry.getValue() instanceof String) {
 					_wolipsProperties.setProperty((String) entry.getKey(), (String) entry.getValue());
 				}
@@ -544,7 +544,7 @@ public class WOVariables {
     	if (!filepath.isAbsolute()) {
       		filepath = new File(_wolipsPropertiesFile.getParentFile(), path);
     	}
-    return filepath.toString();
+    return convertWindowsPath(filepath.toString());
   }
 
   public String getProperty(String aKey) {
