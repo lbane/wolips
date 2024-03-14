@@ -161,7 +161,7 @@ public class BrowserTab extends AbstractWOArgumentsTab {
 	 * @see ILaunchConfigurationTab#getImage()
 	 */
 	public Image getImage() {
-		return LaunchingPlugin.getImageDescriptor("icons/launching/browser-tab.gif").createImage();
+		return getImage("icons/launching/browser-tab.gif");
 	}
 
 	protected void updateLaunchConfigurationDialog() {
