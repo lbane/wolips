@@ -15,10 +15,11 @@ Require-Bundle: org.eclipse.ui.editors,
  org.objectstyle.wolips.locate,
  org.objectstyle.wolips.workbenchutilities,
  org.objectstyle.wolips.wodclipse.core,
- org.objectstyle.wolips.bindings
+ org.objectstyle.wolips.bindings,
+ org.objectstyle.wolips.componenteditor
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.objectstyle.wolips.wodclipse,
  org.objectstyle.wolips.wodclipse.action,
  org.objectstyle.wolips.wodclipse.editor
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-11
