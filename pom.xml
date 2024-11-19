@@ -1,28 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.objectstyle.woproject</groupId>
 	<artifactId>woproject-all-parent</artifactId>
-	<version>2.1-SNAPSHOT</version>
+	<version>5.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>WOProject All</name>
 	<description>Parent POM for all WOProject modules</description>
-	<url>http://objectstyle.org/woproject/</url>
+	<url>https://github.com/wocommunity/wolips/</url>
 
-	<profiles>
-		<profile>
-			<id>build-all</id>
-			<modules>
-				<module>woenvironment</module>
-				<module>woproject-ant-tasks</module>
-				<module>maven2</module>
-			</modules>
-		</profile>
-	</profiles>
+	<properties>
+		<maven.compiler.release>21</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho.version>4.0.8</tycho.version>
+		<sonar.exclusions>**/src-gen/**</sonar.exclusions>
+		<env.ui.test>-Xms512m -Xmx2048m</env.ui.test>
+	</properties>
+
+	<modules>
+		<module>woenvironment</module>
+		<module>woproject-ant-tasks</module>
+		<module>maven2</module>
+		<module>wolips</module>
+	</modules>
 
 	<issueManagement>
-		<system>jira</system>
-		<url>http://objectstyle.org/jira/browse/WOL</url>
+		<system>gihhub</system>
+		<url>https://github.com/wocommunity/wolips/issues</url>
 	</issueManagement>
 
 	<inceptionYear>2001</inceptionYear>
@@ -33,7 +38,8 @@
 			<post>woproject-dev@objectstyle.org</post>
 			<subscribe> woproject-dev-subscribe@objectstyle.org </subscribe>
 			<unsubscribe> woproject-dev-unsubscribe@objectstyle.org </unsubscribe>
-			<archive> http://mail-archives.apache.org/mod_mbox/incubator-cayenne-dev </archive>
+			<archive>
+				http://mail-archives.apache.org/mod_mbox/incubator-cayenne-dev </archive>
 			<otherArchives>
 				<otherArchive> http://objectstyle.org/woproject-old/lists.html </otherArchive>
 			</otherArchives>
@@ -41,15 +47,15 @@
 	</mailingLists>
 
 	<organization>
-		<name>ObjectStyle Group</name>
-		<url>http://objectstyle.org/</url>
+		<name>WOCommunity</name>
+		<url>http://wocommunity.org/</url>
 	</organization>
 
 	<repositories>
 		<repository>
 			<id>wocommunity.releases</id>
 			<name>WOCommunity Maven 2 Releases Repository</name>
-			<url>http://maven.wocommunity.org/content/groups/public</url>
+			<url>https://maven.wocommunity.org/content/groups/public</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
@@ -60,7 +66,7 @@
 		<repository>
 			<id>wocommunity.snapshots</id>
 			<name>WOCommunity Maven 2 Snapshots Repository</name>
-			<url>http://maven.wocommunity.org/content/groups/public-snapshots</url>
+			<url>https://maven.wocommunity.org/content/groups/public-snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -68,13 +74,18 @@
 				<enabled>false</enabled>
 			</releases>
 		</repository>
+		<repository>
+			<id>eclipse</id>
+			<url>https://download.eclipse.org/releases/latest</url>
+			<layout>p2</layout>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
 			<id>wocommunity.releases</id>
 			<name>WOCommunity Maven 2 Releases Repository</name>
-			<url>http://maven.wocommunity.org/content/groups/public</url>
+			<url>https://maven.wocommunity.org/content/groups/public</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
@@ -85,7 +96,7 @@
 		<pluginRepository>
 			<id>wocommunity.snapshots</id>
 			<name>WOCommunity Maven 2 Snapshots Repository</name>
-			<url>http://maven.wocommunity.org/content/groups/public-snapshots</url>
+			<url>https://maven.wocommunity.org/content/groups/public-snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -99,46 +110,194 @@
 		<repository>
 			<id>wocommunity.deployment</id>
 			<name>WOCommunity Maven2 Releases Repository</name>
-			<url>http://maven.wocommunity.org/content/repositories/releases</url>
+			<url>https://maven.wocommunity.org/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>wocommunity.deployment</id>
 			<name>WOCommunity Maven2 Snapshots Repository</name>
-			<url>http://maven.wocommunity.org/content/repositories/snapshots/</url>
+			<url>https://maven.wocommunity.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
 	<scm>
-		<connection>scm:svn:http://svn.objectstyle.org/repos/woproject/trunk/woproject</connection>
-		<developerConnection>scm:svn:https://svn.objectstyle.org/repos/woproject/trunk/woproject</developerConnection>
-		<url>http://svn.objectstyle.org/repos/woproject/trunk/woproject</url>
+		<connection>scm:git:https://github.com/wocommunity/wolips.git</connection>
+		<developerConnection>scm:git:git@github.com:wocommunity/wolips.git</developerConnection>
+		<url>https://github.com/wocommunity/wolips/</url>
 	</scm>
+
+	<!-- Not used for now, but one day, let's not use mystery meat jars in a lib
+	dir. -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.wutka</groupId>
+				<artifactId>dtdparser</artifactId>
+				<version>1.21</version>
+			</dependency>
+			<dependency>
+				<groupId>org.relaxng</groupId>
+				<artifactId>trang</artifactId>
+				<version>20220510</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.hudson</groupId>
+				<artifactId>org.suigeneris.jrcs.diff</artifactId>
+				<version>0.4.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mozilla</groupId>
+				<artifactId>rhino</artifactId>
+				<version>1.7.15</version>
+			</dependency>
+			<dependency>
+				<groupId>com.helger</groupId>
+				<artifactId>ph-css</artifactId>
+				<version>7.0.3</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<artifactId>maven-plugin-plugin</artifactId>
-					<version>2.5</version>
+					<version>3.15.1</version>
 					<dependencies>
 						<dependency>
 							<groupId>org.apache.maven.plugin-tools</groupId>
 							<artifactId>maven-plugin-tools-ant</artifactId>
-							<version>2.5</version>
+							<version>3.15.1</version>
 						</dependency>
 					</dependencies>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.13.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.4.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.5.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.4.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.12.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.3.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>3.0.0-M8</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>3.2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.3.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jxr-plugin</artifactId>
+					<version>3.3.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-maven-plugin</artifactId>
+					<version>${tycho.version}</version>
+					<extensions>true</extensions>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-repository-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-source-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho.extras</groupId>
+					<artifactId>tycho-source-feature-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-versions-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-director-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-surefire-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>target-platform-configuration</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho.extras</groupId>
+					<artifactId>tycho-pack200a-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho.extras</groupId>
+					<artifactId>tycho-pack200b-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.cbi.maven.plugins</groupId>
+					<artifactId>eclipse-jarsigner-plugin</artifactId>
+					<version>1.1.7</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 </project>

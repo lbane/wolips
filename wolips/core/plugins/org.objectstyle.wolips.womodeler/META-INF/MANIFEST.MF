@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Automatic-Module-Name: org.objectstyle.wolips.womodeler
 Bundle-Name: WOModeler
 Bundle-SymbolicName: org.objectstyle.wolips.womodeler;singleton:=true
-Bundle-Version: 1.0.6
+Bundle-Version: 5.0.0.qualifier
 Bundle-Activator: org.objectstyle.wolips.womodeler.Activator
 Require-Bundle: org.eclipse.ui.views.properties.tabbed,
  org.objectstyle.wolips.baseforuiplugins,
@@ -20,8 +21,8 @@ Require-Bundle: org.eclipse.ui.views.properties.tabbed,
  org.objectstyle.wolips.workbenchutilities,
  org.objectstyle.wolips
 Bundle-ActivationPolicy: lazy
-Bundle-Vendor: objectstyle.org
+Bundle-Vendor: wocommunity.org
 Export-Package: org.objectstyle.wolips.womodeler
 Bundle-ClassPath: lib/jdom.jar,
  .
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-21

@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Automatic-Module-Name: org.objectstyle.wolips.wodclipse.core
 Bundle-Name: WOLips WODclips Core Plug-in
 Bundle-SymbolicName: org.objectstyle.wolips.wodclipse.core; singleton:=true
-Bundle-Version: 1.0.6
+Bundle-Version: 5.0.0.qualifier
 Bundle-Activator: org.objectstyle.wolips.wodclipse.core.Activator
 Require-Bundle: org.objectstyle.wolips,
  org.eclipse.jdt.core,
@@ -20,13 +21,8 @@ Require-Bundle: org.objectstyle.wolips,
  org.objectstyle.wolips.variables;bundle-version="1.0.6"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
- lib/commons-jxpath-1.2.jar,
- lib/ss_css2.jar
-Export-Package: com.steadystate.css,
- com.steadystate.css.dom,
- com.steadystate.css.parser,
- com.steadystate.css.parser.selectors,
- jp.aonir.fuzzyxml,
+ lib/commons-jxpath-1.2.jar
+Export-Package: jp.aonir.fuzzyxml,
  jp.aonir.fuzzyxml.event,
  jp.aonir.fuzzyxml.internal,
  jp.aonir.fuzzyxml.resources,
@@ -57,11 +53,5 @@ Export-Package: com.steadystate.css,
  org.objectstyle.wolips.wodclipse.core.refactoring,
  org.objectstyle.wolips.wodclipse.core.util,
  org.objectstyle.wolips.wodclipse.core.validation,
- org.objectstyle.wolips.wodclipse.core.woo,
- org.w3c.css.sac,
- org.w3c.css.sac.helpers,
- org.w3c.dom,
- org.w3c.dom.css,
- org.w3c.dom.stylesheets,
- org.w3c.dom.views
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ org.objectstyle.wolips.wodclipse.core.woo
+Bundle-RequiredExecutionEnvironment: JavaSE-21
