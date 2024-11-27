@@ -17,7 +17,7 @@ Installing prebuilt versions of WOLips in existing Eclipse installations can be 
 
 
 1. Add the WOLips update URL to the Available Software Sites list (either through **Eclipse > Preferences > Install/Update > Available Software Sites** or **Help > Install New Software... > Add**)
-2. Use the WOLips update URL to install the plugin <s>http://jenkins.wocommunity.org/job/WOLips410/lastSuccessfulBuild/artifact/temp/dist/</s> (a new install site on github coming soon)
+2. Use the WOLips update URL to install the plugin <a href="https://wocommunity.github.io/wolips/repository/">https://wocommunity.github.io/wolips/repository/</a>
 
 
 
