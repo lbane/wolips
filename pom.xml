@@ -32,20 +32,6 @@
 
 	<inceptionYear>2001</inceptionYear>
 
-	<mailingLists>
-		<mailingList>
-			<name>WOProject/WOLips Developer List</name>
-			<post>woproject-dev@objectstyle.org</post>
-			<subscribe> woproject-dev-subscribe@objectstyle.org </subscribe>
-			<unsubscribe> woproject-dev-unsubscribe@objectstyle.org </unsubscribe>
-			<archive>
-				http://mail-archives.apache.org/mod_mbox/incubator-cayenne-dev </archive>
-			<otherArchives>
-				<otherArchive> http://objectstyle.org/woproject-old/lists.html </otherArchive>
-			</otherArchives>
-		</mailingList>
-	</mailingLists>
-
 	<organization>
 		<name>WOCommunity</name>
 		<url>http://wocommunity.org/</url>
@@ -53,71 +39,11 @@
 
 	<repositories>
 		<repository>
-			<id>wocommunity.releases</id>
-			<name>WOCommunity Maven 2 Releases Repository</name>
-			<url>https://maven.wocommunity.org/content/groups/public</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>wocommunity.snapshots</id>
-			<name>WOCommunity Maven 2 Snapshots Repository</name>
-			<url>https://maven.wocommunity.org/content/groups/public-snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-		<repository>
 			<id>eclipse</id>
 			<url>https://download.eclipse.org/releases/latest</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>wocommunity.releases</id>
-			<name>WOCommunity Maven 2 Releases Repository</name>
-			<url>https://maven.wocommunity.org/content/groups/public</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>wocommunity.snapshots</id>
-			<name>WOCommunity Maven 2 Snapshots Repository</name>
-			<url>https://maven.wocommunity.org/content/groups/public-snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<distributionManagement>
-		<repository>
-			<id>wocommunity.deployment</id>
-			<name>WOCommunity Maven2 Releases Repository</name>
-			<url>https://maven.wocommunity.org/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>wocommunity.deployment</id>
-			<name>WOCommunity Maven2 Snapshots Repository</name>
-			<url>https://maven.wocommunity.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<scm>
 		<connection>scm:git:https://github.com/wocommunity/wolips.git</connection>
