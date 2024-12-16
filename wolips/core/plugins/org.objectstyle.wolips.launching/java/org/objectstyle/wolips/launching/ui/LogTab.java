@@ -104,14 +104,16 @@ public class LogTab extends AbstractWOArgumentsTab {
 	public void createControl(Composite parentComposite) {
 
 		Composite parent = new Composite(parentComposite, SWT.NULL);
+		
 		GridLayout layout = new GridLayout();
-		layout.marginWidth = 0;
-		layout.marginHeight = 0;
+		// layout.marginWidth = 0;
+		// layout.marginHeight = 0;
 		layout.numColumns = 2;
 		parent.setLayout(layout);
-		GridData data = new GridData();
-		data.verticalAlignment = GridData.FILL;
-		data.horizontalAlignment = GridData.FILL;
+		
+		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+		//data.verticalAlignment = GridData.FILL;
+		//data.horizontalAlignment = GridData.FILL;
 		parent.setLayoutData(data);
 
 		// set F1 help
@@ -120,15 +122,15 @@ public class LogTab extends AbstractWOArgumentsTab {
 
 		Label l1 = new Label(parent, SWT.NULL);
 		l1.setText(PreferencesMessages.getString("LaunchPreferencesPage.label")); //$NON-NLS-1$
-		data = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		data.horizontalSpan = 3;
+		data = new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false);
+		data.horizontalSpan = 2;
 		l1.setLayoutData(data);
 
 		this.debugGroupsTable = new Table(parent, SWT.CHECK | SWT.BORDER);
-		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gd2 = new GridData(SWT.FILL, SWT.FILL, true, true);
 		// gd.widthHint = convertWidthInCharsToPixels(30);
 		gd2.widthHint = 150;
-		gd2.heightHint = 250;
+		//gd2.heightHint = 250;
 		this.debugGroupsTable.setLayoutData(gd2);
 
 		this.debugGroupsTable.addListener(SWT.Selection, new Listener() {
@@ -340,7 +342,7 @@ public class LogTab extends AbstractWOArgumentsTab {
 	 * @see ILaunchConfigurationTab#getImage()
 	 */
 	public Image getImage() {
-		return LaunchingPlugin.getImageDescriptor("icons/launching/logging-tab.gif").createImage();
+		return getImage("icons/launching/logging-tab.gif");
 	}
 
 	protected void updateLaunchConfigurationDialog() {

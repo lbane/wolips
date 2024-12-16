@@ -65,6 +65,10 @@ import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.resource.ImageDescriptor;
+
+import java.util.Objects;
+
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontMetrics;
@@ -76,6 +80,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.objectstyle.wolips.launching.LaunchingPlugin;
 
 /**
  * @author ulrich To change the template for this generated type comment go to
@@ -113,6 +118,13 @@ public abstract class AbstractWOArgumentsTab implements ILaunchConfigurationTab 
 	 * @since 2.1
 	 */
 	private boolean fDirty = true;
+
+	/**
+	 * Every tab has an image. We need to keep track of the resources allocated by this image and should dispose it
+	 * at the end.
+	 */
+	private String imageName;
+	private Image image;
 
 	/**
 	 * Returns the dialog this tab is contained in, or <code>null</code> if
@@ -203,12 +215,15 @@ public abstract class AbstractWOArgumentsTab implements ILaunchConfigurationTab 
 	}
 
 	/**
-	 * By default, do nothing.
+	 * Dispose the image.
 	 * 
 	 * @see ILaunchConfigurationTab#dispose()
 	 */
+	@Override
 	public void dispose() {
-		return;
+		if (image != null) {
+			image.dispose();
+		}
 	}
 
 	/**
@@ -249,13 +264,6 @@ public abstract class AbstractWOArgumentsTab implements ILaunchConfigurationTab 
 		GridData gd = new GridData();
 		gd.horizontalSpan = colSpan;
 		label.setLayoutData(gd);
-	}
-
-	/**
-	 * @see ILaunchConfigurationTab#getImage()
-	 */
-	public Image getImage() {
-		return null;
 	}
 
 	/**
@@ -332,6 +340,26 @@ public abstract class AbstractWOArgumentsTab implements ILaunchConfigurationTab 
 	public void launched(ILaunch launch) {
 		return;
 	}
+	
+	/**
+	 * 
+	 * @param aImageName the image
+	 * @return
+	 */
+	protected Image getImage(String aImageName) {
+		
+		if (!Objects.equals(aImageName, imageName)) {
+		
+			if (image != null) {
+				image.dispose();
+			}
+
+			imageName = aImageName;
+			image = LaunchingPlugin.getImageDescriptor(aImageName).createImage();
+		}
+
+		return image;
+	}
 
 	/**
 	 * Returns a width hint for a button control.
@@ -387,5 +415,4 @@ public abstract class AbstractWOArgumentsTab implements ILaunchConfigurationTab 
 		AbstractWOArgumentsTab.setButtonDimensionHint(button);
 		return button;
 	}
-
 }

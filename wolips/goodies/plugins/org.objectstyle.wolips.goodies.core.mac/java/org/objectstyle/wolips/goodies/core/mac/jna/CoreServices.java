@@ -11,7 +11,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
 public interface CoreServices extends Library {
-	public final CoreServices INSTANCE = (CoreServices) Native.loadLibrary("CoreServices", CoreServices.class);
+	public final CoreServices INSTANCE = Native.loadLibrary("CoreServices", CoreServices.class);
 	
 	public interface FSEventStreamCallback extends Callback {
 		void callback(Pointer streamRef, Pointer clientCallbackInfo, int numEvents, Pointer eventPaths, Pointer eventFlags, Pointer eventIds);
