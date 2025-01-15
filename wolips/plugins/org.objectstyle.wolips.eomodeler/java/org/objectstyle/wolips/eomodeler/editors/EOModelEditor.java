@@ -1067,7 +1067,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 		super.setFocus();
 		// MS: I'm not sure the right way to do this, but without
 		// this call, selecting a relationship in the EOModelEditor
-		// before ever activing the outline would not cause the
+		// before ever activating the outline would not cause the
 		// property view to update.
 		getSite().setSelectionProvider(this);
 

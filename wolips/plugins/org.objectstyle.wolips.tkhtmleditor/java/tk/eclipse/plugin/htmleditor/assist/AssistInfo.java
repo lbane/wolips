@@ -63,20 +63,23 @@ public class AssistInfo {
     return _deprecated;
   }
 
-	public ICompletionProposal toCompletionProposal(int offset, String matchString, Image defaultImage){
-		if (_deprecated) {
-			return new HTMLDeprecatedCompletionProposal(
-				getReplaceString(),
-				_offset + offset - matchString.length(), matchString.length() - _offset,
-				getReplaceString().length(),
-				getImage()==null ? defaultImage : getImage(),
-				getDisplayString(), null, null);
-		}
-		return new CompletionProposal(
-				getReplaceString(),
-				_offset + offset - matchString.length(), matchString.length() - _offset,
-				getReplaceString().length(),
-				getImage()==null ? defaultImage : getImage(),
-				getDisplayString(), null, null);
-	}
+  public ICompletionProposal toCompletionProposal(int offset, String matchString, Image defaultImage){
+	  if (_deprecated) {
+		  return new HTMLDeprecatedCompletionProposal(
+				  getReplaceString(),
+				  _offset + offset - matchString.length(), matchString.length() - _offset,
+				  getReplaceString().length(),
+				  getImage()==null ? defaultImage : getImage(),
+						  getDisplayString(), null, null);
+	  }
+	  //		Platform.getLog(getClass()).info(String.format("replacementString: %s, _replacementOffset=%d, replacementLength=%d, cursorPosition=", 
+	  //				getReplaceString(), _offset + offset - matchString.length(), matchString.length() - _offset,
+	  //				getReplaceString().length()));
+	  return new CompletionProposal(
+			  getReplaceString(),
+			  _offset + offset - matchString.length(), matchString.length() - _offset,
+			  getReplaceString().length(),
+			  getImage()==null ? defaultImage : getImage(),
+					  getDisplayString(), null, null);
+  }
 }
