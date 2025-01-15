@@ -443,7 +443,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 				else {
 					jarPath = jarResource.getLocation();
 				}
-				indexURL = new URI("jar:" + jarPath.toFile().toURL() + "!" + jarEntryPath.toPortableString());
+				indexURL = new URI("jar:" + jarPath.toFile().toURI().toURL() + "!" + jarEntryPath.toPortableString());
 			}
 			if (myModel != null) {
 				if (myModel.getModelGroup() != null) {

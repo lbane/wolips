@@ -96,7 +96,7 @@ public class ReverseEngineerAction extends EMAction {
 					List<String> selectedTableNamesList = Arrays.asList(selectedTableNames);
 					File reverseEngineeredEOModelFolder = reverseEngineer.reverseEngineerWithTableNamesIntoModel(selectedTableNamesList);
 					Set<EOModelVerificationFailure> failures = new HashSet<EOModelVerificationFailure>();
-					model.importEntitiesFromModel(reverseEngineeredEOModelFolder.toURL(), failures);
+					model.importEntitiesFromModel(reverseEngineeredEOModelFolder.toURI().toURL(), failures);
 					if (failures.size() > 0) {
 						EOModelErrorDialog dialog = new EOModelErrorDialog(getWindow().getShell(), failures);
 						dialog.open();
