@@ -23,7 +23,7 @@ public class BrowserTab extends AbstractWOArgumentsTab {
 	private Button openInBrowserCheckbox;
 
 	private Button webServerConnect;
-
+	
 	protected static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	/**
@@ -134,7 +134,7 @@ public class BrowserTab extends AbstractWOArgumentsTab {
 			LaunchingPlugin.getDefault().log(e);
 		}
 	}
-
+	
 	/**
 	 * @see ILaunchConfigurationTab#performApply(ILaunchConfigurationWorkingCopy)
 	 */
@@ -162,7 +162,7 @@ public class BrowserTab extends AbstractWOArgumentsTab {
 	 * @see ILaunchConfigurationTab#getImage()
 	 */
 	public Image getImage() {
-		return LaunchingPlugin.getImageDescriptor("icons/launching/browser-tab.gif").createImage();
+		return getImage("icons/launching/browser-tab.gif");
 	}
 
 	protected void updateLaunchConfigurationDialog() {

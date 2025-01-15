@@ -397,7 +397,7 @@ public class CommonWOArgumentsTab extends AbstractWOArgumentsTab {
 	 * @see ILaunchConfigurationTab#getImage()
 	 */
 	public Image getImage() {
-		return LaunchingPlugin.getImageDescriptor("icons/launching/arguments-tab.gif").createImage();
+		return getImage("icons/launching/arguments-tab.gif");
 	}
 
 	private String getDefaultArguments(ILaunchConfigurationWorkingCopy config) {

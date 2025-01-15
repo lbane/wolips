@@ -342,7 +342,7 @@ public class LogTab extends AbstractWOArgumentsTab {
 	 * @see ILaunchConfigurationTab#getImage()
 	 */
 	public Image getImage() {
-		return LaunchingPlugin.getImageDescriptor("icons/launching/logging-tab.gif").createImage();
+		return getImage("icons/launching/logging-tab.gif");
 	}
 
 	protected void updateLaunchConfigurationDialog() {
