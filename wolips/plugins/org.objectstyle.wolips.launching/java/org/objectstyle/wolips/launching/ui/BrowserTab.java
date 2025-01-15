@@ -12,6 +12,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.objectstyle.wolips.launching.LaunchingMessages;
 import org.objectstyle.wolips.launching.LaunchingPlugin;
@@ -32,16 +33,16 @@ public class BrowserTab extends AbstractWOArgumentsTab {
 
 		Composite parent = new Composite(parentComposite, SWT.NULL);
 		GridLayout layout = new GridLayout();
-		layout.marginWidth = 0;
-		layout.marginHeight = 0;
-		layout.numColumns = 2;
+		//layout.marginWidth = 0;
+		//layout.marginHeight = 0;
+		//layout.numColumns = 2;
 		parent.setLayout(layout);
 		GridData data = new GridData();
 		data.verticalAlignment = GridData.FILL;
 		data.horizontalAlignment = GridData.FILL;
 		parent.setLayoutData(data);
 
-		Composite buttons = new Composite(parent, SWT.NULL);
+		Composite buttons = new Group(parent, SWT.SHADOW_ETCHED_IN);
 		buttons.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
 		layout = new GridLayout();
 		layout.marginHeight = 0;
