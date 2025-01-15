@@ -13,4 +13,11 @@
 	<build>
 		<sourceDirectory>java</sourceDirectory>
 	</build>
+	<dependencies>
+		<dependency>
+			<groupId>io.github.wocommunity</groupId>
+			<artifactId>woenvironment</artifactId>
+			<version>5.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>
