@@ -365,7 +365,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 
 	private EOModelContentOutlinePage myContentOutlinePage;
 
-	private final ListenerList mySelectionChangedListeners;
+	private final ListenerList<ISelectionChangedListener> mySelectionChangedListeners;
 
 	private IStructuredSelection mySelection;
 
@@ -406,7 +406,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 	private int _failuresHashCode;
 
 	public EOModelEditor() {
-		mySelectionChangedListeners = new ListenerList();
+		mySelectionChangedListeners = new ListenerList<>();
 		myDirtyModelListener = new DirtyModelListener();
 		myEntitiesChangeListener = new EntitiesChangeRefresher();
 		myFetchSpecsChangeListener = new FetchSpecsChangeRefresher();
