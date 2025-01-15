@@ -97,6 +97,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
@@ -1259,7 +1260,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 		// so we don't leave you sitting in a blank window.
 		boolean closedWindow = false;
 		if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.OPEN_IN_WINDOW_KEY)) {
-			IWorkbench workbench = Activator.getDefault().getWorkbench();
+			IWorkbench workbench = PlatformUI.getWorkbench();
 			if (workbench.getWorkbenchWindows().length > 1) {
 				IWorkbenchPage workbenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 				if (workbenchPage != null && EOModelerPerspectiveFactory.EOMODELER_PERSPECTIVE_ID.equals(workbenchPage.getPerspective().getId())) {
@@ -1276,7 +1277,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 		// window from Entity Modeler over to the WOLips perspective.
 		if (!closedWindow && Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.CHANGE_PERSPECTIVES_KEY)) {
 			try {
-				IWorkbench workbench = Activator.getDefault().getWorkbench();
+				IWorkbench workbench = PlatformUI.getWorkbench();
 				IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 				if (activeWorkbenchWindow != null) {
 					IWorkbenchPage workbenchPage = activeWorkbenchWindow.getActivePage();
@@ -1310,7 +1311,7 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 	public void switchToEntityModelerPerspective() {
 		try {
 			if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.CHANGE_PERSPECTIVES_KEY)) {
-				IWorkbench workbench = Activator.getDefault().getWorkbench();
+				IWorkbench workbench = PlatformUI.getWorkbench();
 				IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 				if (activeWorkbenchWindow != null) {
 					workbench.showPerspective(EOModelerPerspectiveFactory.EOMODELER_PERSPECTIVE_ID, activeWorkbenchWindow);

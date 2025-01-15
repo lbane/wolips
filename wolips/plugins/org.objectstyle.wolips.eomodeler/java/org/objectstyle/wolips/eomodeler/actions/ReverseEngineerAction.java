@@ -86,7 +86,12 @@ public class ReverseEngineerAction extends EMAction {
 				IEOSQLReverseEngineer reverseEngineer = IEOSQLReverseEngineerFactory.Utility.reverseEngineerFactory().reverseEngineer(activeDatabaseConfig, eomodelClassLoader);
 				List<String> tableNames = reverseEngineer.reverseEngineerTableNames();
 
-				ListSelectionDialog dlg = new ListSelectionDialog(getWindow().getShell(), tableNames, new StringContentProvider(), new StringLabelProvider(), "Select the tables to reverse engineer:");
+				//ListSelectionDialog dlg = new ListSelectionDialog(getWindow().getShell(), tableNames, new StringContentProvider(), new StringLabelProvider(), "Select the tables to reverse engineer:");
+				ListSelectionDialog dlg = ListSelectionDialog.of(tableNames)
+															 .contentProvider(new StringContentProvider())
+															 .labelProvider(new StringLabelProvider())
+															 .message("Select the tables to reverse engineer:")
+															 .create(getWindow().getShell());
 				dlg.setInitialSelections(tableNames.toArray());
 				dlg.setTitle("Reverse Engineer");
 				if (dlg.open() == Window.OK) {
