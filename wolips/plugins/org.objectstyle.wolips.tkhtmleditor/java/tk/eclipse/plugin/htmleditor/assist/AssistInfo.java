@@ -1,5 +1,6 @@
 package tk.eclipse.plugin.htmleditor.assist;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.swt.graphics.Image;
