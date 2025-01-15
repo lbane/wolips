@@ -1082,16 +1082,14 @@ public class EOModelEditor extends MultiPageEditorPart implements IResourceChang
 		// behavior, but it seemed really aggressive.
 		if (Activator.getDefault().getPreferenceStore().getBoolean(PreferenceConstants.CHANGE_PERSPECTIVES_KEY)) {
 			boolean shouldSwitchToEntityModeler = false;
-			IWorkbench workbench = Activator.getDefault().getWorkbench();
+			IWorkbench workbench = PlatformUI.getWorkbench();
 			IWorkbenchWindow activeWindow = workbench.getActiveWorkbenchWindow();
 			if (activeWindow != null) {
-				if (activeWindow != null) {
-					IWorkbenchPage workbenchPage = activeWindow.getActivePage();
-					if (workbenchPage != null) {
-						IEditorReference[] editorReferences = workbenchPage.getEditorReferences();
-						if (editorReferences.length > 1) {
-							shouldSwitchToEntityModeler = true;
-						}
+				IWorkbenchPage workbenchPage = activeWindow.getActivePage();
+				if (workbenchPage != null) {
+					IEditorReference[] editorReferences = workbenchPage.getEditorReferences();
+					if (editorReferences.length > 1) {
+						shouldSwitchToEntityModeler = true;
 					}
 				}
 			}

@@ -121,7 +121,7 @@ public class OpenEntityHandler extends Action implements IHandler, IWorkbenchWin
 
 			for (Iterator it = files.iterator(); it.hasNext();) {
 				IResource resource = (IResource)it.next();
-				IFile file = null;
+				IFile file;
 				if (!"eomodeld".equals(resource.getFileExtension()) && resource instanceof IFile) {
 					if (modelEditor != null) {
 						EOEntity entity = modelEditor.getModel().getModelGroup().getEntityNamed(ResourceUtilities.getFileNameWithoutExtension(resource));
