@@ -56,19 +56,27 @@
 package org.objectstyle.wolips.wizards;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.objectstyle.wolips.baseforplugins.util.CharSetUtils;
 import org.objectstyle.wolips.templateengine.ComponentEngine;
@@ -117,6 +125,7 @@ public class WOComponentCreator implements IRunnableWithProgress {
 		this.wooEncoding = CharSetUtils.encodingNameFromObjectiveC(page.getSelectedEncoding());
 	}
 
+	@Override
 	public void run(IProgressMonitor monitor) throws InvocationTargetException {
 		try {
 			createWOComponent(monitor);
@@ -132,12 +141,10 @@ public class WOComponentCreator implements IRunnableWithProgress {
 	 * @throws CoreException
 	 * @throws InvocationTargetException
 	 */
-	public void createWOComponent(IProgressMonitor monitor) throws CoreException, InvocationTargetException {
+	private void createWOComponent(IProgressMonitor monitor) throws CoreException, InvocationTargetException {
 		IFolder componentFolder = null;
-		IPath componentJavaPath = null;
 		IPath apiPath = null;
 		IContainer componentFolderToReveal = null;
-		IJavaProject iJavaProject = JavaCore.create(this.parentResource.getProject());
 
 		switch (this.parentResource.getType()) {
 		case IResource.PROJECT:
@@ -158,16 +165,78 @@ public class WOComponentCreator implements IRunnableWithProgress {
 			throw new InvocationTargetException(new Exception("Wrong parent resource - check validation"));
 		}
 		
-		IPackageFragmentRoot[] roots= iJavaProject.getPackageFragmentRoots();
-		for (int i= 0; i < roots.length; i++) {
-			if (roots[i].getKind() == IPackageFragmentRoot.K_SOURCE) {
-				componentJavaPath = roots[i].getCorrespondingResource().getLocation();
-				break;
+		final IJavaProject iJavaProject = JavaCore.create(this.parentResource.getProject());
+		final IPackageFragmentRoot[] roots = iJavaProject.getPackageFragmentRoots();
+		IPath componentJavaPath = null;
+		
+		// BitMask
+		final int HAS_JAVA_FILES = 8;
+		final int HAS_COMPLETE_PACKAGE = 4;
+		final int HAS_PARTIAL_PACKAGE = 2;
+		final int HAS_NO_TEST_SOURCE = 1;
+		
+		/*
+		 * It is a little bit complicated to find the right package folder,
+		 * as projects may have more than one source folder (e.g. source, test source, resource, test resource).
+		 * We prioritize found PackageFragmentRoots in the order according
+		 * to a bitmask with values above.
+		 * For example a fragmentroot with java files, exisiting packages and no "test" name has a value of 15 (complete packages imply partial packages),
+		 * while a test resource folder may have the value 0.
+		 * 
+		 * Paths are stored in possiblePaths under its priority number. Priorities are sorted in reverse order (highst first).
+		 * Only the first path for a priority is stored.
+		 */
+		final TreeMap<Integer, IPath> possiblePaths = new TreeMap<>(Comparator.reverseOrder());
+		
+		final ILog logger = ILog.get();
+		for (final IPackageFragmentRoot root: roots) {
+			if (root.getKind() == IPackageFragmentRoot.K_SOURCE) {
+				int priority = 0;
+				
+				final boolean hasCompletePackageName = root.getPackageFragment(packageName).exists();
+				if (hasCompletePackageName) {
+					priority += HAS_COMPLETE_PACKAGE;
+				}
+				
+				// FIXME: There is probably a correct way to get the test source state
+				final boolean isTestSource = List.of(root.getCorrespondingResource().getProjectRelativePath().segments()).contains("test");
+				if (!isTestSource) {
+					priority += HAS_NO_TEST_SOURCE;
+				}
+				
+				final boolean hasPackageNamePrefix = containsPackageName(root);
+				if (hasPackageNamePrefix) {
+					priority += HAS_PARTIAL_PACKAGE;
+				}
+				
+				final boolean hasJavaFiles = containsJavaFiles(root);
+				if (hasJavaFiles) {
+					priority += HAS_JAVA_FILES;
+				}
+				
+				final IPath javaPath = root.getCorrespondingResource().getLocation();
+				
+				logger.info("root is source with path "+javaPath + 
+					" complete pacakges: "+hasCompletePackageName +
+					" test source: " + isTestSource +
+					" package prefix: "+ hasPackageNamePrefix +
+					" java files: "+ hasJavaFiles +
+					" - final priority: " + priority);
+				
+				possiblePaths.computeIfAbsent(priority, k -> javaPath);
 			}
 		}
-		if (packageName != null && packageName.length() > 0) {
+		
+		possiblePaths.forEach((k, v) -> logger.info("Paths: " + k +" - "+ v));
+		// get the first path ordered by priority
+		componentJavaPath = possiblePaths.firstEntry().getValue();
+		
+		if (packageName != null && !packageName.isEmpty()) {
 			componentJavaPath = componentJavaPath.append(new Path(packageName.replace('.', '/')));
 		}
+		
+		logger.info("Final Java Path: "+componentJavaPath);
+		
 		prepareFolder(componentFolder, monitor);
 		String projectName = this.parentResource.getProject().getName();
 		IPath path = componentFolder.getLocation();
@@ -206,11 +275,51 @@ public class WOComponentCreator implements IRunnableWithProgress {
 		}
 	}
 
-	public void prepareFolder(IFolder _folder, IProgressMonitor _progressMonitor) throws CoreException {
+	/* Search for Java files in a package fragment root. Java files are strong
+	 * indicators for Java source folders, in contrast to resource folders.
+	 */
+	private boolean containsJavaFiles(IPackageFragmentRoot root) {
+		try {
+			for (IJavaElement fragment: root.getChildren()) {
+				if (fragment instanceof IPackageFragment pfragment) {
+					if (pfragment.getCompilationUnits().length > 0) {
+						return true;
+					}
+		    	}
+			}
+		} catch (JavaModelException e) {
+			final ILog logger = ILog.get();
+			logger.error("Could not get children of "+root, e);
+		}
+		return false;
+	}
+
+	/**
+	 * Search for the {@link #packageName} and its parents.
+	 * @param root
+	 * @return do the packageName or one of its parent packages exist?
+	 */
+	private boolean containsPackageName(IPackageFragmentRoot root) {
+		String searchPackage = packageName;
+		while (searchPackage != null && !searchPackage.isEmpty()) {
+			if (root.getPackageFragment(searchPackage).exists()) {
+				return true;
+			}
+			int lastDot = searchPackage.lastIndexOf('.');
+			if (lastDot >= 0) {
+				searchPackage = searchPackage.substring(0, lastDot);
+			} else {
+				searchPackage = null;
+			}
+		}
+		return false;
+	}
+
+	private void prepareFolder(IFolder _folder, IProgressMonitor _progressMonitor) throws CoreException {
 		if (!_folder.exists()) {
 			IContainer parent = _folder.getParent();
-			if (parent instanceof IFolder) {
-				prepareFolder((IFolder) parent, _progressMonitor);
+			if (parent instanceof IFolder fld) {
+				prepareFolder(fld, _progressMonitor);
 			}
 			_folder.create(false, true, _progressMonitor);
 		}
